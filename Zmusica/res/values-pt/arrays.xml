@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="nav_drawer_items">
+        <item>@string/abc_searchview_description_search</item>
+        <item>Descubra</item>
+        <item>PlayList</item>
+        <item>Meus álbuns</item>
+        <item>Contato</item>
+    </string-array>
+</resources>
