@@ -1,0 +1,9 @@
+<manifest
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.afollestad.materialdialogs" xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-sdk tools:overrideLibrary="me.zhanghai.android.materialprogressbar" android:minSdkVersion="17"/>
+
+    <application android:permission="android.permission.ACCESS_NETWORK_STATE"/>
+
+</manifest>
