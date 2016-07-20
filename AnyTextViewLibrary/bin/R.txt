@@ -1,0 +1,6 @@
+int attr typeface 0x7f010000
+int string app 0x7f020000
+int string assets_fonts_folder 0x7f020002
+int string typeface_not_found 0x7f020001
+int[] styleable AnyTextView { 0x7f010000 }
+int styleable AnyTextView_typeface 0
