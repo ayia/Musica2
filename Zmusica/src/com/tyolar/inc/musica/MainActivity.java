@@ -75,7 +75,7 @@ public class MainActivity extends BaseActivity {
 			mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
 			initview();
 			AdRegistration.enableLogging(false);
-			AdRegistration.enableTesting(false);
+			// AdRegistration.enableTesting(true);
 			this.interstitialAd = new InterstitialAd(this);
 			this.interstitialAd
 					.setListener(new com.amazon.device.ads.AdListener() {
@@ -84,20 +84,6 @@ public class MainActivity extends BaseActivity {
 						public void onAdLoaded(Ad ad, AdProperties arg1) {
 							// TODO Auto-generated method stub
 							if (ad == MainActivity.this.interstitialAd) {
-								// Show the interstitial ad to the app's user.
-								// Note: While this implementation results in
-								// the ad being shown
-								// immediately after it has finished loading,
-								// for smoothest user
-								// experience you will generally want the ad
-								// already loaded
-
-								// before it’s time to show it. You can thus
-								// instead set a flag
-								// here to indicate the ad is ready to show and
-								// then wait until
-								// the best time to display the ad before
-								// calling showAd().
 								MainActivity.this.interstitialAd.showAd();
 							}
 						}
@@ -133,7 +119,7 @@ public class MainActivity extends BaseActivity {
 				return;
 			}
 			// Load the interstitial.
-			this.interstitialAd.loadAd();
+//			this.interstitialAd.loadAd();
 		}
 		LoadMiniPlayer();
 

@@ -473,7 +473,7 @@ public class PlayerActivity extends Activity {
 
 	private void setupBottomAds() {
 		AdRegistration.enableLogging(false);
-		AdRegistration.enableTesting(false);
+//		AdRegistration.enableTesting(false);
 		try {
 			AdRegistration.setAppKey(mapp.getAdmob_fullscreen_unit());
 		} catch (final IllegalArgumentException e) {
