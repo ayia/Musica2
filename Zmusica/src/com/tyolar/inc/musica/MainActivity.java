@@ -75,7 +75,7 @@ public class MainActivity extends BaseActivity {
 			mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
 			initview();
 			AdRegistration.enableLogging(false);
-			// AdRegistration.enableTesting(true);
+			AdRegistration.enableTesting(true);
 			this.interstitialAd = new InterstitialAd(this);
 			this.interstitialAd
 					.setListener(new com.amazon.device.ads.AdListener() {
@@ -119,10 +119,10 @@ public class MainActivity extends BaseActivity {
 				return;
 			}
 			// Load the interstitial.
-//			this.interstitialAd.loadAd();
+			this.interstitialAd.loadAd();
 		}
 		LoadMiniPlayer();
-
+		setupBottomAds();
 	}
 
 	@Override

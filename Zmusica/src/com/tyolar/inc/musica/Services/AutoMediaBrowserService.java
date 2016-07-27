@@ -2,6 +2,7 @@ package com.tyolar.inc.musica.Services;
 
 import java.util.ArrayList;
 
+import android.annotation.TargetApi;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -16,6 +17,7 @@ import android.media.MediaPlayer.OnPreparedListener;
 import android.media.session.MediaController;
 import android.media.session.MediaSession;
 import android.media.session.MediaSessionManager;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.StrictMode;
 import android.support.v7.app.NotificationCompat;
@@ -202,6 +204,7 @@ public class AutoMediaBrowserService extends Service {
 		}
 
 	}
+
 
 	private void initMediaSessions() {
 		mSession = new MediaSession(getApplicationContext(),
