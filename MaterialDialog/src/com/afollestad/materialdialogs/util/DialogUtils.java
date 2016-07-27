@@ -87,12 +87,12 @@ public class DialogUtils {
             return getActionTextStateList(context, value.data);
         } else {
 
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1) {
+//            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1) {
                 //noinspection deprecation
                 return context.getResources().getColorStateList(colorId);
-            } else {
-                return context.getColorStateList(colorId);
-            }
+//            } else {
+//                return context.getColorStateList(colorId);
+//            }
         }
     }
 
@@ -108,12 +108,12 @@ public class DialogUtils {
      * @return A single color value in the form 0xAARRGGBB.
      */
     public static int getColor(Context context, @ColorRes int colorId) {
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1) {
+//        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1) {
             //noinspection deprecation
             return context.getResources().getColor(colorId);
-        } else {
-            return context.getColor(colorId);
-        }
+//        } else {
+//            return context.getColor(colorId);
+//        }
     }
 
     public static String resolveString(Context context, @AttrRes int attr) {
