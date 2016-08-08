@@ -52,17 +52,23 @@ public class BaseActivity extends ActionBarActivity {
 	}
 
 	public void setupBottomAds() {
-		AdLayout adView = new AdLayout(this);
-		RelativeLayout layout = (RelativeLayout) findViewById(R.id.adsview);
 
-		// Ensure the ad scales to fill the screen width.
-		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.MATCH_PARENT,
-				LinearLayout.LayoutParams.WRAP_CONTENT);
-		layout.addView(adView, lp);
+		try {
+			AdLayout adView = new AdLayout(this);
+			RelativeLayout layout = (RelativeLayout) findViewById(R.id.adsview);
 
-		// Asynchronous task to retrieve an ad.
-		adView.loadAd(new AdTargetingOptions());
+			// Ensure the ad scales to fill the screen width.
+			LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams.MATCH_PARENT,
+					LinearLayout.LayoutParams.WRAP_CONTENT);
+			layout.addView(adView, lp);
+
+			// Asynchronous task to retrieve an ad.
+			adView.loadAd(new AdTargetingOptions());
+		} catch (Exception d) {
+
+			d.printStackTrace();
+		}
 	}
 
 	public void playSong(final song d) {

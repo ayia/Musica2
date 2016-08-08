@@ -27,7 +27,7 @@ import com.tyolar.inc.musica.model.song;
 @SuppressLint("NewApi")
 public class SongGridViewAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
-	private List listactor;
+	private List listactor=new ArrayList() ;
 	Context context;
 
 	public SongGridViewAdapter(Context context, ArrayList listactor,
