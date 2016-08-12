@@ -75,7 +75,7 @@ public class Mini_Player_View extends LinearLayout {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				app2 mapp = (app2) v.getContext().getApplicationContext();
-				mapp.getMusicService().handleAction(mapp.getMusicService().ACTION_PLAY);
+				mapp.getMusicService().catchActions(mapp.getMusicService().ACTION_PLAY);
 			}
 		});
 
@@ -85,7 +85,7 @@ public class Mini_Player_View extends LinearLayout {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				app2 mapp = (app2) v.getContext().getApplicationContext();
-				mapp.getMusicService().handleAction(mapp.getMusicService().ACTION_PAUSE);
+				mapp.getMusicService().catchActions(mapp.getMusicService().ACTION_PAUSE);
 			}
 		});
 		findViewById(R.id.paneltiel).setOnClickListener(new OnClickListener() {

@@ -1,3 +1,4 @@
+
 <resources>
 
     <!-- height of a normal list item in edit playlist mode -->
@@ -70,4 +71,8 @@
     <dimen name="notification_action_padding">8.0dip</dimen>
     <dimen name="notification_action_height">48.0dip</dimen>
     <dimen name="notification_action_width">48.0dip</dimen>
+    
+     <dimen name="noti_big_img">130dp</dimen>
+    <dimen name="noti_big_height">130dp</dimen>
+      <dimen name="noti_button_height">45dp</dimen>
 </resources>

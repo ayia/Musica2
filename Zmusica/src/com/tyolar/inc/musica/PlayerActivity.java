@@ -70,6 +70,7 @@ public class PlayerActivity extends Activity {
 
 	protected void setView() {
 		setContentView(R.layout.activity_player);
+
 		mapp = (app2) getApplication();
 		mapp.PlayerActivity = this;
 		song_titel = (TextView) findViewById(R.id.song_titel);
@@ -95,7 +96,7 @@ public class PlayerActivity extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				app2 mapp = (app2) v.getContext().getApplicationContext();
-				mapp.getMusicService().handleAction(
+				app2.getMusicService().catchActions(
 						mapp.getMusicService().ACTION_PLAY);
 
 			}
@@ -107,7 +108,7 @@ public class PlayerActivity extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				app2 mapp = (app2) v.getContext().getApplicationContext();
-				mapp.getMusicService().handleAction(
+				app2.getMusicService().catchActions(
 						mapp.getMusicService().ACTION_PAUSE);
 
 			}
@@ -335,7 +336,7 @@ public class PlayerActivity extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				app2 mapp = (app2) v.getContext().getApplicationContext();
-				mapp.getMusicService().handleAction(
+				mapp.getMusicService().catchActions(
 						mapp.getMusicService().ACTION_PREVIOUS);
 			}
 		});
@@ -344,7 +345,7 @@ public class PlayerActivity extends Activity {
 			@Override
 			public void onClick(View qv) {
 				app2 mapp = (app2) qv.getContext().getApplicationContext();
-				mapp.getMusicService().handleAction(
+				mapp.getMusicService().catchActions(
 						mapp.getMusicService().ACTION_NEXT);
 			}
 		});
@@ -473,7 +474,7 @@ public class PlayerActivity extends Activity {
 
 	private void setupBottomAds() {
 		AdRegistration.enableLogging(false);
-//		AdRegistration.enableTesting(false);
+		// AdRegistration.enableTesting(false);
 		try {
 			AdRegistration.setAppKey(mapp.getAdmob_fullscreen_unit());
 		} catch (final IllegalArgumentException e) {
