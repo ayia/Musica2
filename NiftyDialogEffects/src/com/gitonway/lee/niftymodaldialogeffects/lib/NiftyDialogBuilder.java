@@ -402,9 +402,9 @@ public class NiftyDialogBuilder extends Dialog implements DialogInterface {
     public final void setItems(String[] items2) {
        
     	ArrayAdapter<String> itemsAdapter = 
-    	new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1,items2);
+    	new ArrayAdapter<String>(getContext(), R.layout.mytextview,items2);
     	 listView=new ListView(this.getContext());
-    	
+    	 
     	listView.setAdapter(itemsAdapter);
     	setCustomView(listView,this.getContext());
     }
