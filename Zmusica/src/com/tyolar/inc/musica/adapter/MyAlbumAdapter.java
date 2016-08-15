@@ -16,8 +16,6 @@ import android.widget.ImageView;
 import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.squareup.picasso.Picasso;
 import com.tyolar.inc.musica.BaseActivity;
 import com.tyolar.inc.musica.R;

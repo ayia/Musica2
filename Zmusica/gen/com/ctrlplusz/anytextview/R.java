@@ -8,15 +8,15 @@ package com.ctrlplusz.anytextview;
 
 public final class R {
 	public static final class attr {
-		public static final int typeface = 0x7f01016d;
+		public static final int typeface = 0x7f01014b;
 	}
 	public static final class string {
-		public static final int app = 0x7f0c003b;
-		public static final int assets_fonts_folder = 0x7f0c003d;
-		public static final int typeface_not_found = 0x7f0c003c;
+		public static final int app = 0x7f0d003b;
+		public static final int assets_fonts_folder = 0x7f0d003d;
+		public static final int typeface_not_found = 0x7f0d003c;
 	}
 	public static final class styleable {
-		public static final int[] AnyTextView = { 0x7f01016d };
+		public static final int[] AnyTextView = { 0x7f01014b };
 		public static final int AnyTextView_typeface = 0;
 	}
 }

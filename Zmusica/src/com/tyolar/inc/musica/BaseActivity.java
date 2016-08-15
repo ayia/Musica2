@@ -98,12 +98,12 @@ public class BaseActivity extends ActionBarActivity {
 			mapp.mini_player = (Mini_Player_View) findViewById(R.id.miniplayer);
 
 		}
-		if (mapp.mini_player.isloaded()) {
+//		if (mapp.mini_player.isloaded()) {
 			Mini_Player_View d = (Mini_Player_View) findViewById(R.id.miniplayer);
 			d.setCopyof(mapp.mini_player);
 			mapp.mini_player = d;
 
-		}
+//		}
 	}
 
 	public void initMiniPlayer(final song d) {

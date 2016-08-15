@@ -9,9 +9,11 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.MaterialDialog;
+import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
+import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 import com.tyolar.inc.musica.DAO.PlayListDAO;
 import com.tyolar.inc.musica.composants.Playlist_Editor;
+
 import com.tyolar.inc.musica.model.PlayList;
 import com.tyolar.inc.musica.model.song;
 
@@ -35,12 +37,13 @@ public class Staticui {
 			plsnames[listactor.length] = ac.getResources().getString(
 					R.string.dmusic_playlist_create_playlist);
 
-			new MaterialDialog.Builder(ac)
-					.title(R.string.dmusic_playlist_add_to_title).items(plsnames)
-					.negativeText(R.string.cancel)
-					.itemsCallback(new MaterialDialog.ListCallback() {
+			final NiftyDialogBuilder dsi =GetDialog(ac);
+			dsi.withTitle(ac.getResources().getString(R.string.dmusic_playlist_add_to_title))
+					.items(plsnames)
+					.withButton2Text(ac.getResources().getString(R.string.cancel))
+					.itemsCallback(new NiftyDialogBuilder.ListCallback() {
 						@Override
-						public void onSelection(MaterialDialog dialog,
+						public void onSelection(NiftyDialogBuilder dialog,
 								View view, int which, CharSequence text) {
 							try {
 								if (which == size) {
@@ -56,6 +59,7 @@ public class Staticui {
 									d.getSongs().add(song);
 									PlayListDAO.remove(ac, d);
 									PlayListDAO.save(ac, d);
+									dsi.dismiss();
 									Toast.makeText(
 											ac,
 											ac.getResources().getString(
@@ -64,12 +68,10 @@ public class Staticui {
 
 								}
 							} catch (Exception e) {
-								// TODO Auto-generated catch
-								// block
-								e.printStackTrace();
+								dsi.dismiss();
 								Toast.makeText(
 										ac,
-										ac.getResources()
+								u		ac.getResources()
 												.getString(
 														R.string.error),
 										Toast.LENGTH_LONG).show();
@@ -86,63 +88,86 @@ public class Staticui {
 					ac.getResources().getString(R.string.error),
 
 					Toast.LENGTH_LONG).show();
-
 		}
 
 	}
+	
+	public static  NiftyDialogBuilder GetDialog(android.content.Context  ctx){
+		final NiftyDialogBuilder dialogBuilder=NiftyDialogBuilder.getInstance(ctx);
+		dialogBuilder.withTitleColor(ctx.getResources().getColor(R.color.pure_white))                                  //def
+	    .withDividerColor("#11000000")                              //def
+	     .withCostumeColor(ctx.getResources().getColor(R.color.pure_white))                              //def
+	    .withMessageColor(ctx.getResources().getColor(R.color.orange))                              //def  | withMessageColor(int resid)
+	    .withDialogColor(ctx.getResources().getColor(R.color.orange))                               //def  | withDialogColor(int resid)
+	    .withIcon(ctx.getResources().getDrawable(R.drawable.ic_launcher_white))
+	    .withDuration(700)                                          //def
+	    .withEffect(Effectstype.Sidefill) 
+	       .setButton2Click(new View.OnClickListener() {
+	        @Override
+	        public void onClick(View v) {
+	        	dialogBuilder.dismiss();
+	        }
+	    })
+	    ;                                      //def Effectstype.Slidetop
+	   
+		
+		return dialogBuilder;
+	}
+	
+	
 	public static void create_playlist(final Activity ac,final song song) {
-		// TODO Auto-generated method stub
-		final Playlist_Editor plsçeditor = new Playlist_Editor(
-				ac);
+		
+		final Playlist_Editor plsçeditor = new Playlist_Editor(ac);
 		Random generator = new Random();
 		final int ida = generator.nextInt(1000000);
-		final MaterialDialog d = new MaterialDialog.Builder(ac)
-				.title(ac.getResources().getString(
-						R.string.dmusic_download_cancel_dialog_prompt_collection_playlist))
-				.customView(plsçeditor, false)
-				.callback(new MaterialDialog.ButtonCallback() {
-					@Override
-					public void onPositive(MaterialDialog dialog) {
-						try {
-
-							PlayList pls = new PlayList(ida, plsçeditor
-									.getPlaylist_name(), plsçeditor
-									.getPlaylist_description(), null);
-							ArrayList<song> list = new ArrayList<song>() {
-								{
-									if (song != null)
-										add(song);
-								}
-							};
-							pls.setSongs(list);
-							PlayListDAO.save(ac, pls);
-
-							dialog.dismiss();
-
-							Toast.makeText(
-									ac,
-									ac.getResources().getString(
-											R.string.playlist_created),
-									Toast.LENGTH_LONG).show();
-
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							Toast.makeText(
-									ac,
-									ac.getResources().getString(
-											R.string.error),
-									Toast.LENGTH_LONG).show();
-
-						}
-
+		final NiftyDialogBuilder dialogBuilder= GetDialog(ac);
+		dialogBuilder
+	    .withTitle(ac.getResources().getString(
+				R.string.dmusic_download_cancel_dialog_prompt_collection_playlist))                                  //.withTitle(null)  no title
+	     .withButton1Text("OK")                                      //def gone
+	    .withButton2Text(ac.getResources().getString(R.string.cancel))                                  //def gone
+	    .isCancelableOnTouchOutside(true)                           //def    | isCancelable(true)
+	    .setCustomView(plsçeditor,ac)         //.setCustomView(View or ResId,context)
+	    .setButton1Click(new View.OnClickListener() {
+	        @Override
+	        public void onClick(View v) {
+	        try{
+	        	PlayList pls = new PlayList(ida, plsçeditor
+						.getPlaylist_name(), plsçeditor
+						.getPlaylist_description(), null);
+				ArrayList<song> list = new ArrayList<song>() {
+					{
+						if (song != null)
+							add(song);
 					}
+				};
+				pls.setSongs(list);
+				PlayListDAO.save(ac, pls);
 
-					@Override
-					public void onNegative(MaterialDialog dialog) {
-						dialog.dismiss();
-					}
-				}).positiveText(R.string.save_as_playlist)
-				.negativeText(R.string.cancel).show();
+				dialogBuilder.dismiss();
+
+				Toast.makeText(
+						ac,
+						ac.getResources().getString(
+								R.string.playlist_created),
+						Toast.LENGTH_LONG).show();
+
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				Toast.makeText(
+						ac,
+						ac.getResources().getString(
+								R.string.error),
+						Toast.LENGTH_LONG).show();
+
+			}
+	                    }
+	    })
+	 
+	    .show();
+			
+		dialogBuilder.getOkButton().setEnabled(false);
+		
 		plsçeditor.getname_playlist().addTextChangedListener(new TextWatcher() {
 			public void beforeTextChanged(CharSequence s, int start, int count,
 					int after) {
@@ -154,9 +179,9 @@ public class Staticui {
 				String newText = plsçeditor.getname_playlist().getText()
 						.toString();
 				if (newText.trim().length() == 0) {
-					d.getpositiveButton().setEnabled(false);
+					dialogBuilder.getOkButton().setEnabled(false);
 				} else {
-					d.getpositiveButton().setEnabled(true);
+					dialogBuilder.getOkButton().setEnabled(true);
 
 				}
 			};
@@ -166,6 +191,8 @@ public class Staticui {
 			}
 		});
 
+			
+		
 	}
 	public static void create_playlist(final Activity ac,final ArrayList<song> list) {
 		// TODO Auto-generated method stub
@@ -173,47 +200,54 @@ public class Staticui {
 				ac);
 		Random generator = new Random();
 		final int ida = generator.nextInt(1000000);
-		final MaterialDialog d = new MaterialDialog.Builder(ac)
-				.title(ac.getResources().getString(
-						R.string.dmusic_download_cancel_dialog_prompt_collection_playlist))
-				.customView(plsçeditor, false)
-				.callback(new MaterialDialog.ButtonCallback() {
-					@Override
-					public void onPositive(MaterialDialog dialog) {
-						try {
+		
+		final NiftyDialogBuilder dialogBuilder= GetDialog(ac);
+		dialogBuilder
+	    .withTitle(ac.getResources().getString(
+				R.string.dmusic_download_cancel_dialog_prompt_collection_playlist))                                  //.withTitle(null)  no title
+	     .withButton1Text("OK")                                      //def gone
+	    .withButton2Text(ac.getResources().getString(R.string.cancel))                                  //def gone
+	    .isCancelableOnTouchOutside(true)                           //def    | isCancelable(true)
+	    .setCustomView(plsçeditor,ac)         //.setCustomView(View or ResId,context)
+	    .setButton1Click(new View.OnClickListener() {
+	        @Override
+	        public void onClick(View v) {
+	        try{
+	        	PlayList pls = new PlayList(ida, plsçeditor
+						.getPlaylist_name(), plsçeditor
+						.getPlaylist_description(), null);
+				pls.setSongs(list);
+				PlayListDAO.save(ac, pls);
 
-							PlayList pls = new PlayList(ida, plsçeditor
-									.getPlaylist_name(), plsçeditor
-									.getPlaylist_description(), null);
-							pls.setSongs(list);
-							PlayListDAO.save(ac, pls);
+				dialogBuilder.dismiss();
 
-							dialog.dismiss();
+				Toast.makeText(
+						ac,
+						ac.getResources().getString(
+								R.string.playlist_created),
+						Toast.LENGTH_LONG).show();
+	        } catch (Exception e) {
+				// TODO Auto-generated catch block
+				Toast.makeText(
+						ac,
+						ac.getResources().getString(
+								R.string.error),
+						Toast.LENGTH_LONG).show();
 
-							Toast.makeText(
-									ac,
-									ac.getResources().getString(
-											R.string.playlist_created),
-									Toast.LENGTH_LONG).show();
+			}
 
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							Toast.makeText(
-									ac,
-									ac.getResources().getString(
-											R.string.error),
-									Toast.LENGTH_LONG).show();
-
-						}
-
-					}
-
-					@Override
-					public void onNegative(MaterialDialog dialog) {
-						dialog.dismiss();
-					}
-				}).positiveText(R.string.save_as_playlist)
-				.negativeText(R.string.cancel).show();
+	                    }
+	    })
+	    .setButton2Click(new View.OnClickListener() {
+	        @Override
+	        public void onClick(View v) {
+	        	dialogBuilder.dismiss();
+	        }
+	    })
+	    .show();
+		
+dialogBuilder.getOkButton().setEnabled(false);
+		
 		plsçeditor.getname_playlist().addTextChangedListener(new TextWatcher() {
 			public void beforeTextChanged(CharSequence s, int start, int count,
 					int after) {
@@ -225,9 +259,9 @@ public class Staticui {
 				String newText = plsçeditor.getname_playlist().getText()
 						.toString();
 				if (newText.trim().length() == 0) {
-					d.getpositiveButton().setEnabled(false);
+					dialogBuilder.getOkButton().setEnabled(false);
 				} else {
-					d.getpositiveButton().setEnabled(true);
+					dialogBuilder.getOkButton().setEnabled(true);
 
 				}
 			};
@@ -236,7 +270,6 @@ public class Staticui {
 				// don't care about this one
 			}
 		});
-
 	}
 
 

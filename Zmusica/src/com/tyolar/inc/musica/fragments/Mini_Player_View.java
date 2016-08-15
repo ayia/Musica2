@@ -21,8 +21,8 @@ public class Mini_Player_View extends LinearLayout {
 	TextView txt_songartist;
 	Context ctx;
 	app2 mapp;
-	private  boolean loaded = false;
-	
+	private boolean loaded = false;
+
 	public boolean isloaded() {
 		return loaded;
 	}
@@ -31,43 +31,41 @@ public class Mini_Player_View extends LinearLayout {
 		this.loaded = isloaded;
 	}
 
-
-
 	public Mini_Player_View(Context context) {
 		super(context);
 		initview(context);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public Mini_Player_View(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		initview(context);
 	}
+
 	public Mini_Player_View(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		initview(context);
 	}
 
-	public void setCopyof(Mini_Player_View m){
+	public void setCopyof(Mini_Player_View m) {
 		this.setVisibility(m.getVisibility());
 		play_button.setVisibility(m.play_button.getVisibility());
 		pause_button.setVisibility(m.pause_button.getVisibility());
 		txt_songtitle.setText(m.txt_songtitle.getText());
 		txt_songartist.setText(m.txt_songartist.getText());
-		
-		
+
 	}
 
 	public void initview(Context context) {
-		ctx=context;
+		ctx = context;
 		mapp = (app2) context.getApplicationContext();
 		LayoutInflater mInflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		mInflater.inflate(R.layout.miniplzyer, this, true);
 		play_button = (ImageView) findViewById(R.id.play_button);
-		pause_button = (ImageView)findViewById(R.id.pause_button);
-		txt_songtitle = (TextView)findViewById(R.id.txt_songtitle);
-		txt_songartist = (TextView)findViewById(R.id.txt_songartist);
+		pause_button = (ImageView) findViewById(R.id.pause_button);
+		txt_songtitle = (TextView) findViewById(R.id.txt_songtitle);
+		txt_songartist = (TextView) findViewById(R.id.txt_songartist);
 
 		play_button.setOnClickListener(new OnClickListener() {
 
@@ -75,7 +73,8 @@ public class Mini_Player_View extends LinearLayout {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				app2 mapp = (app2) v.getContext().getApplicationContext();
-				mapp.getMusicService().catchActions(mapp.getMusicService().ACTION_PLAY);
+				mapp.getMusicService().catchActions(
+						mapp.getMusicService().ACTION_PLAY);
 			}
 		});
 
@@ -85,20 +84,21 @@ public class Mini_Player_View extends LinearLayout {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				app2 mapp = (app2) v.getContext().getApplicationContext();
-				mapp.getMusicService().catchActions(mapp.getMusicService().ACTION_PAUSE);
+				mapp.getMusicService().catchActions(
+						mapp.getMusicService().ACTION_PAUSE);
 			}
 		});
 		findViewById(R.id.paneltiel).setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				Intent myIntent = new Intent(ctx, PlayerActivity.class);
 				ctx.startActivity(myIntent);
-				
+
 			}
 		});
-	
+
 	}
 
 	public void Pause() {
@@ -112,7 +112,7 @@ public class Mini_Player_View extends LinearLayout {
 		txt_songartist.setText(d.getArtist());
 		pause_button.setVisibility(View.VISIBLE);
 		play_button.setVisibility(View.GONE);
-		setIsloaded(true) ;
+		setIsloaded(true);
 	}
 
 	public void showLoading(song d) {

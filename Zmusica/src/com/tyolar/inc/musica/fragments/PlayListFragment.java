@@ -16,12 +16,16 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.MaterialDialog;
+
+
+import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
+import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.tyolar.inc.musica.BaseActivity;
 import com.tyolar.inc.musica.CFragment;
 import com.tyolar.inc.musica.R;
+import com.tyolar.inc.musica.Staticui;
 import com.tyolar.inc.musica.app2;
 import com.tyolar.inc.musica.DAO.PlayListDAO;
 import com.tyolar.inc.musica.adapter.PlayListAdapter;
@@ -33,9 +37,11 @@ public class PlayListFragment extends CFragment {
 	GridView playlist_grid;
 	PlayListAdapter adapter;
 	Button addplaylist;
+
 	public PlayListFragment() {
 		super();
 	}
+
 	public PlayListFragment(String titel) {
 		super(titel);
 	}
@@ -48,17 +54,17 @@ public class PlayListFragment extends CFragment {
 		playlist_grid = (GridView) rootView.findViewById(R.id.playlist_grid);
 		addplaylist = (Button) rootView.findViewById(R.id.add_new_playlist);
 		loadMusicPlayList((BaseActivity) getActivity(), this);
-		 app2 mapp = (app2) getActivity().getApplicationContext();
-//		Tracker t = mapp.getTracker(app2.TrackerName.APP_TRACKER);
-//		t.setScreenName("MyAlbumsFragment");
-//		t.send(new HitBuilders.AppViewBuilder().build());
+		app2 mapp = (app2) getActivity().getApplicationContext();
+		// Tracker t = mapp.getTracker(app2.TrackerName.APP_TRACKER);
+		// t.setScreenName("MyAlbumsFragment");
+		// t.send(new HitBuilders.AppViewBuilder().build());
 		mapp.getInstance().trackScreenView("PlayList Screen");
 		return rootView;
 
 	}
 
 	public void notifyDataSetChanged() {
-		
+
 		loadMusicPlayList((BaseActivity) getActivity(), this);
 	}
 
@@ -67,9 +73,10 @@ public class PlayListFragment extends CFragment {
 		PlayList[] array;
 		playlist_grid.setAdapter(null);
 		try {
-			array = PlayListDAO.get(context.getActivity()).toArray(
-					new PlayList[PlayListDAO.get(context.getActivity())
-							.size()]);
+			array = PlayListDAO.get(context.getActivity())
+					.toArray(
+							new PlayList[PlayListDAO.get(context.getActivity())
+									.size()]);
 			adapter = new PlayListAdapter(contexta, array, this);
 			addplaylist.setOnClickListener(new OnClickListener() {
 
@@ -91,59 +98,69 @@ public class PlayListFragment extends CFragment {
 
 	}
 
+
+	
 	public void create_playlist(final song song) {
 		// TODO Auto-generated method stub
 		final Playlist_Editor plsçeditor = new Playlist_Editor(getActivity());
 		Random generator = new Random();
 		final int ida = generator.nextInt(1000000);
-		final MaterialDialog d = new MaterialDialog.Builder(getActivity())
-				.title(getActivity()
-						.getResources()
-						.getString(
-								R.string.dmusic_download_cancel_dialog_prompt_collection_playlist))
-				.customView(plsçeditor, false)
-				.callback(new MaterialDialog.ButtonCallback() {
-					@Override
-					public void onPositive(MaterialDialog dialog) {
-						try {
-
-							PlayList pls = new PlayList(ida, plsçeditor
-									.getPlaylist_name(), plsçeditor
-									.getPlaylist_description(), null);
-							ArrayList<song> list = new ArrayList<song>() {
-								{
-									if (song != null)
-										add(song);
-									adapter.notifyDataSetChanged();
-								}
-							};
-							pls.setSongs(list);
-							PlayListDAO.save(getActivity(), pls);
-							dialog.dismiss();
-							loadMusicPlayList((BaseActivity) getActivity(),
-									getthis());
-							Toast.makeText(
-									getActivity(),
-									getResources().getString(
-											R.string.playlist_created),
-									Toast.LENGTH_LONG).show();
-
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							Toast.makeText(getActivity(),
-									getResources().getString(R.string.error),
-									Toast.LENGTH_LONG).show();
-
-						}
-
+		final NiftyDialogBuilder dialogBuilder=Staticui.GetDialog(getActivity());
+		dialogBuilder
+	    .withTitle(getActivity()
+				.getResources()
+				.getString(
+						R.string.dmusic_download_cancel_dialog_prompt_collection_playlist))                                  //.withTitle(null)  no title
+	                                         //def Effectstype.Slidetop
+	   .withButton1Text("OK")                                      //def gone
+	    .withButton2Text(getActivity().getResources().getString(R.string.cancel))                           //def gone
+	    .isCancelableOnTouchOutside(true)                           //def    | isCancelable(true)
+	    .setCustomView(plsçeditor,getContext())         //.setCustomView(View or ResId,context)
+	    .setButton1Click(new View.OnClickListener() {
+	        @Override
+	        public void onClick(View v) {
+	        try{
+				PlayList pls = new PlayList(ida, plsçeditor
+						.getPlaylist_name(), plsçeditor
+						.getPlaylist_description(), null);
+				ArrayList<song> list = new ArrayList<song>() {
+					{
+						if (song != null)
+							add(song);
+						adapter.notifyDataSetChanged();
 					}
+				};
+				pls.setSongs(list);
+				PlayListDAO.save(getActivity(), pls);
+			
+				dialogBuilder.dismiss();
+				loadMusicPlayList((BaseActivity) getActivity(),
+						getthis());
+				Toast.makeText(
+						getActivity(),
+						getResources().getString(
+								R.string.playlist_created),
+						Toast.LENGTH_LONG).show();
 
-					@Override
-					public void onNegative(MaterialDialog dialog) {
-						dialog.dismiss();
-					}
-				}).positiveText(R.string.save_as_playlist)
-				.negativeText(R.string.cancel).show();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				Toast.makeText(getActivity(),
+						getResources().getString(R.string.error),
+						Toast.LENGTH_LONG).show();
+
+			}
+	                    }
+	    })
+	    .setButton2Click(new View.OnClickListener() {
+	        @Override
+	        public void onClick(View v) {
+	        	dialogBuilder.dismiss();
+	        }
+	    })
+	    .show();
+			
+		dialogBuilder.getOkButton().setEnabled(false);
+		
 		plsçeditor.getname_playlist().addTextChangedListener(new TextWatcher() {
 			public void beforeTextChanged(CharSequence s, int start, int count,
 					int after) {
@@ -155,9 +172,9 @@ public class PlayListFragment extends CFragment {
 				String newText = plsçeditor.getname_playlist().getText()
 						.toString();
 				if (newText.trim().length() == 0) {
-					d.getpositiveButton().setEnabled(false);
+					dialogBuilder.getOkButton().setEnabled(false);
 				} else {
-					d.getpositiveButton().setEnabled(true);
+					dialogBuilder.getOkButton().setEnabled(true);
 
 				}
 			};
@@ -175,12 +192,12 @@ public class PlayListFragment extends CFragment {
 
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
-//		
-//		if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-//			playlist_grid.setNumColumns(3);;
-//		} else {
-//			playlist_grid.setNumColumns(4);
-//		}
+		//
+		// if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+		// playlist_grid.setNumColumns(3);;
+		// } else {
+		// playlist_grid.setNumColumns(4);
+		// }
 		super.onConfigurationChanged(newConfig);
 	}
 

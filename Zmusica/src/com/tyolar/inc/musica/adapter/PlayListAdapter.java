@@ -18,10 +18,11 @@ import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.MaterialDialog;
+import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 import com.squareup.picasso.Picasso;
 import com.tyolar.inc.musica.BaseActivity;
 import com.tyolar.inc.musica.R;
+import com.tyolar.inc.musica.Staticui;
 import com.tyolar.inc.musica.app2;
 import com.tyolar.inc.musica.DAO.PlayListDAO;
 import com.tyolar.inc.musica.composants.LocalePopupMenu;
@@ -134,8 +135,8 @@ public class PlayListAdapter extends BaseAdapter {
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-						 app2 mapp = (app2) context.getApplicationContext();
-						 mapp.getInstance().trackException(e);
+						app2 mapp = (app2) context.getApplicationContext();
+						mapp.getInstance().trackException(e);
 					}
 				}
 			});
@@ -173,8 +174,8 @@ public class PlayListAdapter extends BaseAdapter {
 						Toast.makeText(v.getContext(),
 								context.getString(R.string.error),
 								Toast.LENGTH_LONG).show();
-						 app2 mapp = (app2) context.getApplicationContext();
-						 mapp.getInstance().trackException(e);
+						app2 mapp = (app2) context.getApplicationContext();
+						mapp.getInstance().trackException(e);
 					}
 					break;
 				case R.id.edit_playlist:
@@ -186,13 +187,23 @@ public class PlayListAdapter extends BaseAdapter {
 								.getString(R.string.edit_playlist_menu));
 						plsçeditor.setPlaylist_name(pls.getName());
 						plsçeditor.setPlaylist_description(pls.getDescription());
-						final MaterialDialog d = new MaterialDialog.Builder(
-								context)
-								.title("Edit")
-								.customView(plsçeditor, false)
-								.callback(new MaterialDialog.ButtonCallback() {
+
+						final NiftyDialogBuilder d = Staticui
+								.GetDialog(context);
+						d.withTitle("Edit")
+								.setCustomView(plsçeditor, context)
+								.withButton1Text("OK")
+								// def gone
+								.withButton2Text(
+										context.getResources().getString(
+												R.string.cancel))
+								// def gone
+								.isCancelableOnTouchOutside(true)
+								 .setButton1Click(new OnClickListener() {
+									
 									@Override
-									public void onPositive(MaterialDialog dialog) {
+									public void onClick(View v) {
+										// TODO Auto-generated method stub
 										try {
 											pls.setDescription(plsçeditor
 													.getPlaylist_description());
@@ -202,7 +213,7 @@ public class PlayListAdapter extends BaseAdapter {
 													pls);
 											PlayListDAO.save(v.getContext(),
 													pls);
-											dialog.dismiss();
+											d.dismiss();
 											Toast.makeText(
 													v.getContext(),
 													v.getContext()
@@ -220,19 +231,21 @@ public class PlayListAdapter extends BaseAdapter {
 															.getString(
 																	R.string.error),
 													Toast.LENGTH_LONG).show();
-											 app2 mapp = (app2) context.getApplicationContext();
-											 mapp.getInstance().trackException(e);
+											app2 mapp = (app2) context
+													.getApplicationContext();
+											mapp.getInstance()
+													.trackException(e);
 
-										}
-
+										}	
 									}
-
-									@Override
-									public void onNegative(MaterialDialog dialog) {
-										dialog.dismiss();
-									}
-								}).positiveText(R.string.save_as_playlist)
-								.negativeText(R.string.cancel).show();
+								} )
+								 .setButton2Click(new View.OnClickListener() {
+							        @Override
+							        public void onClick(View v) {
+							        	d.dismiss();
+							        }
+							    })
+							.show();
 						plsçeditor.getname_playlist().addTextChangedListener(
 								new TextWatcher() {
 									public void beforeTextChanged(
@@ -247,10 +260,10 @@ public class PlayListAdapter extends BaseAdapter {
 												.getname_playlist().getText()
 												.toString();
 										if (newText.trim().length() == 0) {
-											d.getpositiveButton().setEnabled(
+											d.getOkButton().setEnabled(
 													false);
 										} else {
-											d.getpositiveButton().setEnabled(
+											d.getOkButton().setEnabled(
 													true);
 
 										}
@@ -267,8 +280,8 @@ public class PlayListAdapter extends BaseAdapter {
 						e.printStackTrace();
 						Toast.makeText(v.getContext(), "a7777777",
 								Toast.LENGTH_LONG).show();
-						 app2 mapp = (app2) context.getApplicationContext();
-						 mapp.getInstance().trackException(e);
+						app2 mapp = (app2) context.getApplicationContext();
+						mapp.getInstance().trackException(e);
 					}
 					break;
 
